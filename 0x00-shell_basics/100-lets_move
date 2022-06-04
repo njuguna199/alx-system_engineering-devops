@@ -1,2 +1,2 @@
 #!/bin/bash
-nv [A-Z]* /tmp/u
+nv A-Z* /tmp/u
