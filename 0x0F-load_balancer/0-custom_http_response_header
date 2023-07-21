@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Update and install necessary packages
+sudo apt update
+sudo apt upgrade
+sudo apt install nginx
+
+# Replace Nginx configuration file with the one from web-01
+sudo rm /etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-enabled/default
+sudo scp user@web-01:/etc/nginx/sites-available/default /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Modify Nginx configuration file to add a custom HTTP header
+sudo sed -i '/server {/a add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
+
+# Restart Nginx to apply changes
+sudo systemctl restart nginx
+
